@@ -74,7 +74,7 @@ function fit!(θ::Params,
         ll /= length(valid)
         println("epoch: $epoch, ll: $ll")
         if ll - llbest < tol
-            # stop, θcurr is more than tol worse than θ
+            # stop, θcurr isn't tol better than θ
             epoch = maxit + 1
         elseif ll > llbest
             # save the best model 
