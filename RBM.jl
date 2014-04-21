@@ -101,11 +101,11 @@ function cdk!(θ::RBMParams,
     s = σ * (θ.ρ - τ)
 
     # unrolling the paramter update is approximately 
-    # 6 times faster than equivalent vectorized update.
+    # 6 times faster than an equivalent vectorized update.
     hdim, vdim = size(θ.W)
     for j = 1:vdim
         for i = 1:hdim
-            θ.ΔW[i,j] = μ * θ.ΔW[i,j] + η * (ph[i] * x[j] - nh[i] * nv[j] - s[i])
+            θ.ΔW[i,j] = μ * θ.ΔW[i,j] + η * ((ph[i] - s[i]) * x[j] - nh[i] * nv[j])
             θ.W[i,j] += θ.ΔW[i,j]
         end
     end
@@ -157,6 +157,10 @@ function fit!(θ::RBMParams,
     # [Returns]
     # The best parameters as measured by reconstruction loglikelihood.
 
+    # Copy of θ to θcurr for working and copy back when a
+    # better set of parameters is found. A little awkward,
+    # but doing it this way ensures that if caller catches an error,
+    # their θ will be the best θcurr so far.
     epoch = 1
     θcurr = deepcopy(θ)
     llbest = typemin(Float64)

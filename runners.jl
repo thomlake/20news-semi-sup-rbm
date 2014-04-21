@@ -33,7 +33,7 @@ end
 
 function logreg_with_latent_experiment()
     results = (Int=>Float64)[]
-    rbmfname = "./sparserbm.4000hid.jls"
+    rbmfname = "./sparserbm.6000hid2.jls"
     stepsize = 50
     train, valid, test, idim, _ = make_latent(rbmfname)
 
@@ -57,7 +57,7 @@ function logreg_with_latent_experiment()
     end
     experiment = {"rbmfname"=>rbmfname,
                   "results"=>results}
-    serialize(open("rbmexp.jls", "w"), experiment)
+    serialize(open("rbmexp.6000hid2.jls", "w"), experiment)
 end
 
 function logreg_with_raw_experiment()

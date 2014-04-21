@@ -10,11 +10,14 @@ def dump_sentences():
     preprocess = vectorizer.build_preprocessor()
     tokenize = vectorizer.build_tokenizer()
     
+    print len(docs)
+    exit()
+
     def words(doc):
         p = preprocess(doc)
         return ' '.join(t.encode('ascii', 'replace') for t in tokenize(p))
         
-    with open('20news.txt', 'w') as f:
+    with open('20-news.txt', 'w') as f:
         for doc, lbl in zip(docs, labels):
             print >> f, label_names[lbl]
             print >> f, words(doc)
